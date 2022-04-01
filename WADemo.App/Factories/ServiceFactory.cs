@@ -7,7 +7,7 @@ namespace WADemo.App.Factories;
 
 internal static class ServiceFactory
 {
-  private const string DataDir = "../data/";
+  private const string DataDir = "..{Path.DirectorySeparatorChar}data{Path.DirectorySeparatorChar}";
   private const string DataFile = "almanac.csv";
 
 

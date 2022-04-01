@@ -12,27 +12,33 @@ public class RecordRepoTests
   [SetUp]
   public void Setup()
   {
-    if (File.Exists(LogFile)) File.Delete(LogFile);
+    if (File.Exists(_logFile)) File.Delete(_logFile);
 
     // Delete any Test Data File
-    if (File.Exists(TestDataFile)) File.Delete(TestDataFile);
+    if (File.Exists(_testDataFile)) File.Delete(_testDataFile);
 
     // Copy the seed contents to a newly created Test Data File
-    File.Copy(SeedFile, TestDataFile);
+    File.Copy(_seedFile, _testDataFile);
 
-    _repo = new CsvRecordRepository(TestDataFile, new CSVLogger(LogFile));
+    _repo = new CsvRecordRepository(_testDataFile, new CSVLogger(_logFile));
   }
+
   // TODO: Look for a way to avoid all the silly ../ and get net6 to read the dang file!
-  private const string LogFile = "../../../DAL/log.error.csv";
-  private const string SeedFile = "../../../DAL/test_data/test.seed.csv";
-  private const string TestDataFile = "../../../DAL/test_data/test.data.csv";
+  private static readonly string _logFile =
+    $"..{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}DAL{Path.DirectorySeparatorChar}log.error.csv";
+
+  private static readonly string _seedFile =
+    $"..{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}DAL{Path.DirectorySeparatorChar}test_data{Path.DirectorySeparatorChar}test.seed.csv";
+
+  private static readonly string _testDataFile =
+    $"..{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}DAL{Path.DirectorySeparatorChar}test_data{Path.DirectorySeparatorChar}test.data.csv";
 
   private CsvRecordRepository? _repo;
 
   [Test]
   public void CanCreateTestFile()
   {
-    Assert.IsTrue(File.Exists(TestDataFile));
+    Assert.IsTrue(File.Exists(_testDataFile));
   }
 
   [Test]
